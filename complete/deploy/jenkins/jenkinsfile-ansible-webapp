@@ -13,9 +13,9 @@ node {
 
   stage('Deploy') {
 
-    azureWebAppPublish azureCredentialsId: env.AZURE_CRED_ID,
-                       resourceGroup: env.RES_GROUP, 
-                       appName: env.WEB_APP_NAME, 
+    azureWebAppPublish azureCredentialsId: "542d982a-7614-4a3d-ae6b-ce321bfef5b0",
+                       resourceGroup: "hiepit07", 
+                       appName: "hiepit07", 
                        filePath: "ROOT.war"
   }
 }
