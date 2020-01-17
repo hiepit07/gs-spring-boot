@@ -13,7 +13,7 @@ node {
 
   stage('Deploy') {
 
-    azureWebAppPublish azureCredentialsId: "542d982a-7614-4a3d-ae6b-ce321bfef5b0",
+    azureWebAppPublish azureCredentialsId: "c0d8e81c-2c65-4fa9-95cd-89c2a7450e40",
                        resourceGroup: "hiepit07", 
                        appName: "hiepit07", 
                        filePath: "ROOT.war"
