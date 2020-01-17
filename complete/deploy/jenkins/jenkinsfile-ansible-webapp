@@ -1,20 +1,30 @@
 node {
-  stage('init') {
+  stage('Init') {
     checkout scm
   }
 
-  stage('build') {
+  stage('Build') {
     sh '''
         cd complete
         mvn clean package
-        cp ../src/main/resources/web.config web.config
-        zip todo.zip app.jar web.config
+        mv target/*.war ROOT.war
     '''
   }
 
-  stage('deploy') {
-    azureWebAppPublish azureCredentialsId: env.AZURE_CRED_ID,
-                       resourceGroup: env.RES_GROUP, appName: env.WEB_APP, filePath: "**/todo.zip"
+  stage('Deploy') {
+    withCredentials([azureServicePrincipal(credentialsId: env.AZURE_CRED_ID,
+                                    subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                    clientIdVariable: 'AZURE_CLIENT_ID',
+                                    clientSecretVariable: 'AZURE_SECRET',
+                                    tenantIdVariable: 'AZURE_TENANT')]) {
+                                      
+      ansiblePlaybook installation: 'ansible',
+      playbook: 'complete/deploy/ansible/webapp.yml'
+    }
 
+    azureWebAppPublish azureCredentialsId: env.AZURE_CRED_ID,
+                       resourceGroup: env.RES_GROUP, 
+                       appName: env.WEB_APP_NAME, 
+                       filePath: "ROOT.war"
   }
 }
