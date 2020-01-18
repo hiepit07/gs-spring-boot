@@ -16,8 +16,7 @@ node {
                                     subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                     clientIdVariable: 'AZURE_CLIENT_ID',
                                     clientSecretVariable: 'AZURE_SECRET',
-                                    tenantIdVariable: 'AZURE_TENANT')]) {
-                                      
+                                    tenantIdVariable: 'AZURE_TENANT')]) {      
       ansiblePlaybook installation: 'ansible',
       playbook: 'complete/deploy/ansible/webapp.yml'
     }
